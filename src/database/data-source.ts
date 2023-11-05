@@ -7,11 +7,11 @@ export const dataSourceOptions: DataSourceOptions = {
     port: Number(process.env.DB_PORT),
     username: 'postgres',
     password: 'root123',
-    database: process.env.DB_DATABASE,
-    entities: [],
+    database: 'e-commerce',
+    entities: ['dist/**/*.entity{.ts,.js}'],
     migrations: [],
     logging: false,
-    synchronize: true
+    synchronize: false
 }
 const dataSource = new DataSource(dataSourceOptions);
 export default dataSource;
