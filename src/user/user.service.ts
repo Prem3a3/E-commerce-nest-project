@@ -1,11 +1,25 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnprocessableEntityException } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { User } from './entities/user.entity';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { UserMapper } from './mapper/user.mapper';
 
 @Injectable()
 export class UserService {
-  create(createUserDto: CreateUserDto) {
-    return 'This action adds a new user';
+  constructor(
+    @InjectRepository(User)
+    private userRepository: Repository<User>,
+    private userMapper: UserMapper,
+  ) {}
+  async create(createUserDto: CreateUserDto) {
+    if(this.userRepository.findOne({where: {email: createUserDto.email}}))
+    {
+      throw new UnprocessableEntityException('email already registred')
+    }
+const user = this.userMapper.toUserEntity(createUserDto);
+   return await this.userRepository.save(user);   
   }
 
   findAll() {

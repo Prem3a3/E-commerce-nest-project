@@ -10,7 +10,7 @@ export const dataSourceOptions: DataSourceOptions = {
     database: 'e-commerce',
     entities: ['dist/**/*.entity{.ts,.js}'],
     migrations: [],
-    logging: false,
+    logging: true,
     synchronize: false
 }
 const dataSource = new DataSource(dataSourceOptions);

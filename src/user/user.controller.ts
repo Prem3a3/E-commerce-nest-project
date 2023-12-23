@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -8,12 +16,14 @@ import { Repository } from 'typeorm';
 
 @Controller('user')
 export class UserController {
-  constructor(private readonly userService: UserService,
-    @InjectRepository(User) private userRepository:Repository<User>) {}
+  constructor(
+    private readonly userService: UserService,
+    @InjectRepository(User) private userRepository: Repository<User>,
+  ) {}
 
   @Post()
-  create(@Body() createUserDto: CreateUserDto) {
-    return this.userService.create(createUserDto);
+  async create(@Body() createUserDto: CreateUserDto) {
+    return await this.userService.create(createUserDto);
   }
 
   @Get()
